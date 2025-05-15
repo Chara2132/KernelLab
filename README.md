@@ -20,14 +20,14 @@ KernelLab è pensato per ambienti **minimalisti**, come installazioni Arch senza
 ## 📂 Struttura del Progetto
 \`\`\`
 KernelLab/
-├── main.py                
+├── main.py
 ├── core/
-│   ├── log_parser.py       
-│   └── module_inspector.py 
-├── logs/                   
-├── README.md               
-├── requirements.txt        
-└── .venv/                  
+│ ├── log_parser.py
+│ └── module_inspector.py
+├── logs/
+├── README.md
+├── requirements.txt
+└── .venv/             
 \`\`\`
 ---
 

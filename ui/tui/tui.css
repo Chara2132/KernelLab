@@ -1,0 +1,50 @@
+/* ui/tui/tui.css */
+
+Screen {
+  background: #1e1e2e;
+  color: #d8dee9;
+  padding: 1 2;
+}
+
+Header, Footer {
+  background: #3b4252;
+  color: #eceff4;
+  border: none;
+}
+
+Horizontal {
+  height: 1fr;
+}
+
+#menu {
+  width: 30%;
+  background: #2e3440;
+  border: solid #81a1c1;
+  padding: 1;
+}
+
+#menu > ListItem {
+  padding: 1 2;
+  border: none;
+  background: transparent;
+  color: #d8dee9;
+}
+
+#menu > ListItem.-highlight {
+  background: #81a1c1;
+  color: #2e3440;
+}
+
+#output {
+  background: #3b4252;
+  padding: 1;
+  border: solid #88c0d0;
+  overflow-y: auto;
+  height: 100%;
+  color: #eceff4;
+}
+
+ListView {
+  scrollbar-color: #81a1c1 #2e3440;
+  scrollbar-size: 2 3;
+}

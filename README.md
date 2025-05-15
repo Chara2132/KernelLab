@@ -1,4 +1,4 @@
-# 🧠 KernelLab
+# 🧠 KernelLab 
 
 **KernelLab** è uno strumento da riga di comando in Python progettato per fornire un'interfaccia minimalista, potente e modulare per l'analisi del kernel Linux, in particolare su distribuzioni come **Arch Linux**.  
 Il progetto nasce come un laboratorio personale per esplorare, monitorare e comprendere il comportamento del kernel — il cuore del sistema operativo.
@@ -18,8 +18,8 @@ KernelLab è pensato per ambienti **minimalisti**, come installazioni Arch senza
 ---
 
 ## 📂 Struttura del Progetto
-
-KernelLab/ 
+\`\`\`
+KernelLab/
 ├── main.py                
 ├── core/
 │   ├── log_parser.py       
@@ -28,7 +28,7 @@ KernelLab/
 ├── README.md               
 ├── requirements.txt        
 └── .venv/                  
-
+\`\`\`
 ---
 
 ## ⚙️ Funzionalità

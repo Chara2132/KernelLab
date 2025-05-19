@@ -1,8 +1,6 @@
-# ui/tui/tui.py
 from textual.app import App, ComposeResult
-from textual.widgets import Header, Footer, Static, ListView, ListItem
-from textual.containers import Horizontal
-from textual.reactive import reactive
+from textual.widgets import Static, Button, Input
+from textual.containers import Vertical, Horizontal
 from core.log_parser import read_kernel_log
 from core.crash_analyzer import detect_crashes
 from core.timeline_builder import build_timeline, format_timeline
@@ -12,60 +10,66 @@ class KernelLabTUI(App):
     CSS_PATH = "tui.css"
 
     def compose(self) -> ComposeResult:
-        yield Header(show_clock=True)
-        yield Horizontal(
-            ListView(id="menu"),
-            Static(id="output", expand=True)
+        yield Vertical(
+            Button("Mostra log kernel", id="show-log"),
+            Button("Analizza crash", id="analyze-crash"),
+            Button("Mostra timeline eventi", id="show-timeline"),
+            Button("Esci", id="exit"),
+            Horizontal(
+                Static(id="output", expand=True, markup=False),
+                Input(placeholder="Inserisci comando", id="input")
+            ),
+            id="menu"
         )
-        yield Footer()
 
-    def on_mount(self):
-        menu = self.query_one("#menu", ListView)
-        menu_items = [
-            ("Mostra log kernel", self.show_kernel_log),
-            ("Analizza crash", self.show_crash_report),
-            ("Mostra timeline", self.show_timeline),
-            ("Esci", self.exit)
-        ]
-        for label, _ in menu_items:
-            menu.append(ListItem(Static(label)))
-
-        self.menu_actions = {label: action for label, action in menu_items}
-        self.show_kernel_log()
-        self.query_one("#menu").focus()
-
-    async def on_list_view_selected(self, event):
-        static_widget = event.item.query_one(Static)
-        selected_label = static_widget.renderable  
-        action = self.menu_actions.get(selected_label)
-        if action:
-            action()
-
-
-    def show_kernel_log(self):
+    def on_button_pressed(self, event: Button.Pressed) -> None:
         output = self.query_one("#output", Static)
-        logs = read_kernel_log()
-        escaped_logs = [line.replace("[", r"\[").replace("]", r"\]") for line in logs[:30]]
-        output.update("\n".join(escaped_logs))
+        button_id = event.button.id
 
+        if button_id == "show-log":
+            logs = read_kernel_log()
+            output.update("\n".join(logs[:30]))
 
-    def show_crash_report(self):
+        elif button_id == "analyze-crash":
+            crash_data = detect_crashes()
+            if not crash_data:
+                output.update("Nessun crash rilevato")
+            else:
+                formatted = "\n".join(f"[{entry['category']}] {entry['message']}" for entry in crash_data[:30])
+                output.update(formatted)
+
+        elif button_id == "show-timeline":
+            logs = read_kernel_log()
+            timeline = build_timeline(logs)
+            if not logs:
+                output.update("Nessuna timeline rilevata")
+            else:
+                output.update(format_timeline(timeline[:30]))
+
+        elif button_id == "exit":
+            self.exit(0)
+
+    async def on_input_submitted(self, event: Input.Submitted) -> None:
         output = self.query_one("#output", Static)
-        crash_data = detect_crashes()
-        if not crash_data:
-            output.update("[green]Nessun crash o errore rilevato nei log[/green]")
+        input_widget = self.query_one("#input", Input)
+        command = event.value.strip()
+
+        if not command:
             return
-        formatted = "\n".join(f"[{cat}] {msg}" for cat, msg in crash_data[:30])
-        output.update(formatted)
 
-    def show_timeline(self):
-        output = self.query_one("#output", Static)
-        logs = read_kernel_log()
-        timeline = build_timeline(logs)
-        output.update(format_timeline(timeline[:30]))
+        if command == "help":
+            result = "Comandi disponibili:\n  help\n  clear\n  version\n  show-log"
+        elif command == "clear":
+            result = ""
+        elif command == "version":
+            result = "KernelLab TUI v1.0"
+        elif command == "show-log":
+            logs = read_kernel_log()
+            result = "\n".join(logs[:10])
+        else:
+            result = f"Comando non riconosciuto: '{command}'"
 
-    def exit(self):
-        return
-
+        output.update(output.renderable.plain + "\n> " + command + "\n" + result)
+        input_widget.value = ""
 
 KernelLabTUI().run()

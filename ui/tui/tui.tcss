@@ -1,0 +1,18 @@
+/* ui/tui/tui.css */
+Screen {
+    overflow-y: auto;
+}
+
+.input {
+    height: 3;
+    padding: 1;
+    background: gray;
+    border: round;
+}
+
+.output {
+    background: black;
+    color: white;
+    overflow-y: auto;
+    border: round;
+}

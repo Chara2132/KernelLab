@@ -50,7 +50,7 @@ KernelLab/
 - Parsing dipendenze, dimensioni, utilizzi
 - (Planned) Caricamento/rimozione dinamica (`modprobe`, `rmmod`)
 
-### 🧪 Interfaccia testuale (TUI) *(in sviluppo)*
+### 🧪 Interfaccia testuale (TUI)
 - Con librerie come `Textual`, `Rich Console`, o `urwid`
 - Navigazione interattiva tra log, moduli, messaggi critici
 

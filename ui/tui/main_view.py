@@ -9,11 +9,9 @@ from core.timeline_builder import build_timeline, format_timeline
 
 class KernelLabTUI(App):
     def __init__(self, **kwargs)->None:
-        super().__init__(**kwargs)
+        super().__init__(**kwargs,css_path="tui.tcss")
         self.command_history: list[str] = []
         self.history_index: int | None = None
-
-    CSS_PATH = "tui.tcss"
 
     def compose(self) -> ComposeResult:
         yield Vertical(
@@ -24,17 +22,13 @@ class KernelLabTUI(App):
 
     async def on_input_submitted(self, event: Input.Submitted) -> None:
         command = event.value.strip()
-        if command:
-            self.command_history.append(command)
+        if command: self.command_history.append(command)
         self.history_index = None
         output_static = self.query_one("#output", Static)
         scroll_view = self.query_one("#scroll_output")
         input_str = self.query_one("#input", Input)
-
         command = input_str.value.strip().split()
-        if not command:
-            return
-
+        if not command: return
         if command[0] == "help" or (len(command) > 1 and command[1] in ("-h", "--help")):
             result = (
                 "Comandi disponibili:\n"
@@ -121,23 +115,9 @@ class KernelLabTUI(App):
                     self.history_index += 1
                     input_widget.value = self.command_history[self.history_index]
                 event.stop()
-        if event.key == "down":
-            scroll_view.scroll_down()
-            scroll_view.scroll_down()
-            scroll_view.scroll_down()
-            event.stop()
-        elif event.key == "up":
-            scroll_view.scroll_up()
-            scroll_view.scroll_up()
-            scroll_view.scroll_up()
-            event.stop()
-        elif event.key == "right":
-            scroll_view.scroll_right()
-            scroll_view.scroll_right()
-            scroll_view.scroll_right()
-        elif event.key == "left":
-            scroll_view.scroll_left()
-            scroll_view.scroll_left()
-            scroll_view.scroll_left()
+        if event.key == "down":    [scroll_view.scroll_down() for _ in range(4)]
+        elif event.key == "up":    [scroll_view.scroll_up() for _ in range(4)]
+        elif event.key == "right": [scroll_view.scroll_right() for _ in range(4)]
+        elif event.key == "left":  [scroll_view.scroll_left() for _ in range(4)]
 
 KernelLabTUI().run()

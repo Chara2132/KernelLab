@@ -1,7 +1,7 @@
 # core/crash_analyzer.py
 from core.log_parser import read_kernel_log
 
-crash_keywords = {
+crash_keywords: dict[list] = {
     "kernel": [
         "kernel panic", "BUG:", "Oops", "segfault", "general protection fault",
         "invalid opcode", "fatal exception", "stack overflow", "stack trace",

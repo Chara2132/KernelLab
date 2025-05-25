@@ -1,0 +1,22 @@
+html{
+    font-family: sans-serif;
+    background: #89f7fe;
+    background: linear-gradient(90deg, #89f7fe, #2781ff);
+}
+header{
+    text-align: center;
+}
+article h1{
+    font-size: 30px;
+    text-align: center;
+}
+p{
+    background: none;
+    text-align: left;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration:underline;
+}

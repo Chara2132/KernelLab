@@ -1,8 +1,10 @@
 #ui/tui/main_view.py
-from textual.app import App, ComposeResult
-from textual.widgets import Static, Input
-from textual.containers import Vertical, VerticalScroll
+from pathlib import Path
 from textual.events import Key
+from textual.widgets import Static, Input
+from textual.app import App, ComposeResult
+from textual.containers import Vertical, VerticalScroll
+from core.cmd import shell_command
 from core.log_parser import read_kernel_log
 from core.crash_analyzer import detect_crashes
 from core.timeline_builder import build_timeline, format_timeline
@@ -12,7 +14,37 @@ class KernelLabTUI(App):
         super().__init__(**kwargs,css_path="tui.tcss")
         self.command_history: list[str] = []
         self.history_index: int | None = None
-
+        self.current_dir = Path.home()
+        self.UNSUPPORTED_COMMANDS = [
+            "sudo",
+            "vim",
+            "nano",
+            "less",
+            "more",
+            "man",
+            "top",
+            "htop",
+            "btop",
+            "ssh",
+            "su",
+            "ftp",
+            "sftp",
+            "python",
+            "ipython",
+            "gdb",
+            "tmux",
+            "screen",
+            "dialog",
+            "whiptail",
+            "watch",
+            "yes",
+            "tail -f",
+            "ping",
+            "read",
+            "pacman",
+            "apt",
+            "pip",
+        ]
     def compose(self) -> ComposeResult:
         yield Vertical(
             Input(id="input", placeholder="Scrivi il tuo comando"),
@@ -21,14 +53,15 @@ class KernelLabTUI(App):
         )
 
     async def on_input_submitted(self, event: Input.Submitted) -> None:
-        command = event.value.strip()
-        if command: self.command_history.append(command)
-        self.history_index = None
-        output_static = self.query_one("#output", Static)
         scroll_view = self.query_one("#scroll_output")
+        output_static = self.query_one("#output", Static)
         input_str = self.query_one("#input", Input)
         command = input_str.value.strip().split()
+        self.history_index = None
+
+        if input_str.value.strip(): self.command_history.append(input_str.value)
         if not command: return
+
         if command[0] == "help" or (len(command) > 1 and command[1] in ("-h", "--help")):
             result = (
                 "Comandi disponibili:\n"
@@ -40,11 +73,10 @@ class KernelLabTUI(App):
                 "  >version\n"
                 "  -exit"
             )
-        elif command[0] == "clear":
-            output_static.update("")
-            result = ""
+        elif command[0] in self.UNSUPPORTED_COMMANDS :
+            result = f"⚠️ I comandi con `{command[0]}` non sono supportati nella shell simulata."
         elif command[0] == "version":
-            result = "KernelLab TUI v1.0"
+            result = "  KernelLab TUI v1.0"
         elif command[0] == "show-kernel-log":
             if len(command) > 1 and command[1] in ("-t", "--total"):
                 result = "\n".join(read_kernel_log())
@@ -81,14 +113,19 @@ class KernelLabTUI(App):
                     result = "Errore: specifica un numero valido dopo -l, es. `show-timeline -l 10`"
             else:
                 result = format_timeline(timeline)
+        elif command[0] == "clear": 
+            output_static.update("")
+            result=""
         elif command[0] == "exit":
             self.exit(0)
             result = ""
         else:
-            result = f"Comando non riconosciuto: '{command[0]}'"
+            command=input_str.value.strip()
+            result = shell_command(command, self.current_dir)
 
-        if isinstance(result, list):
-            result = "\n".join(result)
+        if isinstance(result, str) and result.startswith("__cd__"):
+            self.current_dir = Path(result.replace("__cd__", ""))
+            result = f"Directory attuale: {self.current_dir}"
         output_static.update(output_static.renderable + "\n> " + " ".join(command) + "\n" + result)
         input_str.value = ""
         scroll_view.scroll_end(animate=True)

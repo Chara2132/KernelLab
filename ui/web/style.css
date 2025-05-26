@@ -1,22 +1,129 @@
-html{
-    font-family: sans-serif;
-    background: #89f7fe;
-    background: linear-gradient(90deg, #89f7fe, #2781ff);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-header{
+
+:root {
+    --bg-color: #1e1e2f;
+    --text-color: #eaeaea;
+    --accent-color: #00bfa6;
+    --heading-color: #ffffff;
+    --subtle-text: #bbbbbb;
+    --card-bg: #2c2c3a;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+}
+
+header {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
     text-align: center;
+    margin-bottom: 40px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
-article h1{
-    font-size: 30px;
-    text-align: center;
+
+header h1 {
+    color: var(--accent-color);
+    font-size: 2.5rem;
 }
-p{
-    background: none;
-    text-align: left;
+
+article {
+    display: flex;
+    background-color: var(--card-bg);
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
-a{
+
+article h1,
+article h2 {
+    color: var(--heading-color);
+    margin-bottom: 15px;
+}
+
+article h1 {
+    font-size: 1.8rem;
+}
+
+article h2 {
+    font-size: 1.5rem;
+}
+
+article p {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: var(--text-color);
+    align-items: center;
+}
+
+article ul {
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+article ul li {
+    margin-bottom: 5px;
+    color: var(--subtle-text);
+    font-size: 1rem;
+}
+
+a {
+    color: var(--accent-color);
     text-decoration: none;
 }
-a:hover{
-    text-decoration:underline;
+
+a:hover {
+    text-decoration: underline;
+}
+
+main {
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    article {
+        padding: 15px;
+    }
+}
+article.two-column {
+    text-align: center;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.text-content {
+    flex: 1 1 60%;
+}
+
+.image-container {
+    flex: 1 1 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }

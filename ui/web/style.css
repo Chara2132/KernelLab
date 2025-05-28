@@ -4,6 +4,22 @@
     box-sizing: border-box;
 }
 
+button{
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+    background-color: rgb(44, 44, 58);
+    border: 2px solid rgb(78, 90, 138);
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+button:hover{
+    background-color: black;
+    color: white;
+}
+
+
 :root {
     --bg-color: #1e1e2f;
     --text-color: #eaeaea;
@@ -21,7 +37,8 @@ body {
     padding: 20px;
 }
 
-header {
+header{
+
     background-color: var(--card-bg);
     padding: 30px;
     border-radius: 10px;
@@ -33,15 +50,6 @@ header {
 header h1 {
     color: var(--accent-color);
     font-size: 2.5rem;
-}
-
-article {
-    display: flex;
-    background-color: var(--card-bg);
-    padding: 25px;
-    margin-bottom: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
 
 article h1,
@@ -85,9 +93,7 @@ a:hover {
     text-decoration: underline;
 }
 
-main {
-    margin-top: 20px;
-}
+
 
 @media (max-width: 768px) {
     body {
@@ -102,8 +108,9 @@ main {
         padding: 15px;
     }
 }
+
 article.two-column {
-    text-align: center;
+
     display: flex;
     gap: 30px;
     align-items: flex-start;
@@ -127,3 +134,22 @@ article.two-column {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
+
+
+table{
+    border-collapse: collapse;
+    border: 2px solid black;
+    text-align: center;
+    font-size: 18px;
+}
+table thead th{
+    border: solid 2px black;
+    text-align: center;
+    padding: 10px;
+}
+table tbody th,td{
+    border: solid 2px black;
+    text-align: center;
+    padding: 10px;
+}
+

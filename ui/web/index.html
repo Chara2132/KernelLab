@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KernelLab GUI</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 
 <body>
@@ -51,28 +52,42 @@
             </p>
         </div>
     
-        <div class="image-container">
-            <img src="./utils/linux-kernel.png" alt="Schema Kernel Linux">
-        </div>
+      
     </article>
-    
-    <article>
-        <h2>Ma che cos'è di preciso una TUI e perché usarla?</h2>
-        <p>Una TUI, o Text-based User Interface, è un'interfaccia utente che funziona tramite testo all'interno di un
-            terminale o console. A differenza delle GUI (interfacce grafiche), le TUI utilizzano caratteri e simboli per
-            creare menu, finestre, e interazioni, mantenendo però la leggerezza e la rapidità tipiche delle applicazioni
-            a riga di comando.</p>
+        <h1>Ma che cos'è di preciso una TUI e perché usarla?</h1>
+        <article id="TUI">
+            <p>
+                Una TUI, o Text-based User Interface, è un'interfaccia utente che funziona tramite testo all'interno di
+                un
+                terminale o console. A differenza delle GUI (interfacce grafiche), le TUI utilizzano caratteri e simboli
+                per
+                creare menu, finestre, e interazioni, mantenendo però la leggerezza e la rapidità tipiche delle
+                applicazioni a riga di comando.
+            </p>
 
-        <p>Usare una TUI può essere molto vantaggioso in diversi contesti: consente di avere un ambiente interattivo e
-            user-friendly anche in assenza di un sistema grafico, è ideale per amministratori di sistema e sviluppatori
-            che lavorano spesso da remoto via <a href="https://it.wikipedia.org/wiki/Secure_Shell">SSH(Secure Socket Shell)</a>, e permette di monitorare e controllare sistemi complessi in modo
-            efficiente senza appesantire le risorse.</p>
+            <p>
+                Usare una TUI può essere molto vantaggioso in diversi contesti: consente di avere un ambiente
+                interattivo e
+                user-friendly anche in assenza di un sistema grafico, è ideale per amministratori di sistema e
+                sviluppatori
+                che lavorano spesso da remoto via <a href="https://it.wikipedia.org/wiki/Secure_Shell">SSH(Secure Socket
+                    Shell)</a>,
+                e permette di monitorare e controllare sistemi complessi in modo efficiente senza appesantire le
+                risorse.
+            </p>
 
-        <p>Nel caso di Kernel Lab, la TUI rappresenta il modo perfetto per offrire agli utenti un'interfaccia semplice,
-            immediata e integrata con la shell, che consente di analizzare i log del kernel e identificare crash in modo
-            rapido senza dover uscire dall'ambiente di lavoro oltre ad avere le normali funzioni di una shell di linux.</p>
-        <p>Nei vari comandi noi analizzeremo i piu semplici nonchè in piu importanti.
-            <ul>
+            <p>
+                Nel caso di Kernel Lab, la TUI rappresenta il modo perfetto per offrire agli utenti un'interfaccia
+                semplice,
+                immediata e integrata con la shell, che consente di analizzare i log del kernel e identificare crash in
+                modo
+                rapido senza dover uscire dall'ambiente di lavoro oltre ad avere le normali funzioni di una shell di
+                linux.
+            </p>
+
+            <p style="margin-bottom: 5px !important;">Nei vari comandi noi analizzeremo i piu semplici nonchè in piu
+                importanti, ovvero:</p>
+            <ul style="margin-bottom: 5px !important;">
                 <li>ls</li>
                 <li>cd</li>
                 <li>touch</li>
@@ -83,13 +98,358 @@
                 <li>mov</li>
                 <li>grep</li>
             </ul>
-            e altri.
-        </p>
-    </article>
+            <p>e altri.</p>
+        </article>
+        <h1>COMANDI DI LINUX</h1>
+        <article>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Comando</th>
+                        <th>A cosa serve</th>
+                        <th>Descrizione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>ls</th>
+                        <td>Lista i file</td>
+                        <td>Visualizza l'elenco dei file e delle directory presenti nella directory corrente. Può essere
+                            arricchito con opzioni, ad esempio `ls -l` mostra dettagli come permessi, proprietario,
+                            dimensioni e data di modifica; `ls -a` include anche i file nascosti.</td>
+                    </tr>
+                    <tr>
+                        <th>cd</th>
+                        <td>Cambia directory</td>
+                        <td>Cambia la directory corrente. Può essere usato con percorsi assoluti o relativi. Ad esempio
+                            `cd /home/utente` va in quella directory, mentre `cd ..` torna alla cartella superiore.</td>
+                    </tr>
+                    <tr>
+                        <th>pwd</th>
+                        <td>Mostra percorso</td>
+                        <td>Mostra il percorso assoluto della directory in cui ti trovi attualmente. È utile per sapere
+                            dove ci si trova nel filesystem, soprattutto durante l'uso di script o sessioni remote.</td>
+                    </tr>
+                    <tr>
+                        <th>mkdir</th>
+                        <td>Crea una cartella</td>
+                        <td>Crea una o più directory. Con l'opzione `-p` può creare anche directory annidate, es. `mkdir
+                            -p a/b/c` creerà tutte le sottodirectory se non esistono.</td>
+                    </tr>
+                    <tr>
+                        <th>rm</th>
+                        <td>Rimuove file o cartelle</td>
+                        <td>Rimuove file o directory. Senza opzioni rimuove solo file singoli; con `-r` (ricorsivo) può
+                            eliminare intere directory. L'opzione `-f` forza la rimozione senza chiedere conferma.
+                            Attenzione: le rimozioni sono permanenti.</td>
+                    </tr>
+                    <tr>
+                        <th>cp</th>
+                        <td>Copia file</td>
+                        <td>Copia file e directory. `cp file1 file2` copia `file1` in `file2`. L'opzione `-r` permette
+                            di copiare directory intere. Altre opzioni utili includono `-u` (solo file più recenti) e
+                            `-i` (chiede conferma prima di sovrascrivere).</td>
+                    </tr>
+                    <tr>
+                        <th>>mv</th>
+                        <td>Sposta o rinomina</td>
+                        <td>Sposta file o directory in una nuova posizione o cambia loro nome. Ad esempio, `mv file.txt
+                            backup/` sposta il file in una cartella; `mv vecchio.txt nuovo.txt` lo rinomina. È anche
+                            usato per organizzare file rapidamente.</td>
+                    </tr>
+                    <tr>
+                        <th>touch</th>
+                        <td>Crea file vuoti</td>
+                        <td>Crea uno o più file vuoti, o aggiorna il timestamp di modifica di un file esistente. Utile
+                            per creare rapidamente segnaposto o file di log.</td>
+                    </tr>
+                    <tr>
+                        <th>cat</th>
+                        <td>Visualizza contenuto</td>
+                        <td>Concatena e visualizza il contenuto di uno o più file sul terminale. Ad esempio `cat
+                            file.txt` mostra il contenuto di quel file. È utile anche per redirigere contenuti (`cat
+                            file1 file2 > unito.txt`).</td>
+                    </tr>
+                    <tr>
+                        <th>echo</th>
+                        <td>Stampa testo</td>
+                        <td>Stampa una stringa sul terminale. Usato spesso negli script per mostrare messaggi o scrivere
+                            contenuti in un file (`echo "ciao" > saluto.txt`). Supporta variabili e sequenze speciali
+                            (`\n`, `\t`).</td>
+                    </tr>
+                    <tr>
+                        <th>man</th>
+                        <td>Manuale comandi</td>
+                        <td>Mostra il manuale di un comando, fornendo descrizioni dettagliate, opzioni e utilizzi. Es.
+                            `man ls` spiega tutto sul comando `ls`. Utilissimo per apprendere le funzionalità avanzate
+                            di ogni strumento.</td>
+                    </tr>
+                    <tr>
+                        <th>grep</th>
+                        <td>Cerca nel testo</td>
+                        <td>Cerca stringhe o espressioni regolari all'interno di file o output. Es. `grep "ciao"
+                            file.txt` trova tutte le righe contenenti "ciao". Potente per filtrare dati, log, e
+                            combinabile con altri comandi via pipe (`|`).</td>
+                    </tr>
+                    <tr>
+                        <th>chmod</th>
+                        <td>Modifica permessi</td>
+                        <td>Cambia i permessi di accesso a file o directory. Può essere usato in modo simbolico (`chmod
+                            u+x file`) o numerico (`chmod 755 file`). Utile per garantire che solo determinati utenti
+                            possano leggere, scrivere o eseguire file.</td>
+                    </tr>
+                    <tr>
+                        <th>ps</th>
+                        <td>Visualizza processi</td>
+                        <td>Mostra l'elenco dei processi attivi. Con `ps aux` fornisce informazioni dettagliate su tutti
+                            i processi dell'utente e di sistema, inclusi PID, utilizzo della CPU/memoria, stato e
+                            comando di avvio.</td>
+                    </tr>
+                    <tr>
+                        <th>kill</th>
+                        <td>Termina processi</td>
+                        <td>Termina un processo specificando il suo PID. Es. `kill 1234` termina il processo con PID
+                            1234. Con `-9` si forza la chiusura immediata. È usato in caso di processi bloccati o che
+                            consumano troppe risorse.</td>
+                    </tr>
+                    <tr>
+                        <th>top</th>
+                        <td>Monitora risorse</td>
+                        <td>Visualizza in tempo reale l'utilizzo della CPU, della memoria e altri dettagli sui processi
+                            in esecuzione. È utile per diagnosticare problemi di performance o identificare processi che
+                            consumano troppe risorse.</td>
+                    </tr>
+                    <tr>
+                        <th>htop</th>
+                        <td>Monitor avanzato</td>
+                        <td>Versione migliorata e interattiva di `top`, con interfaccia a colori, ordinamenti
+                            personalizzabili e comandi di gestione dei processi più intuitivi. Deve essere installato
+                            separatamente sulla maggior parte dei sistemi.</td>
+                    </tr>
+                    <tr>
+                        <th>find</th>
+                        <td>Trova file</td>
+                        <td>Permette di cercare file e directory in modo ricorsivo, in base a criteri come nome, tipo,
+                            dimensione o data. Esempio: `find . -name "*.txt"` cerca tutti i file `.txt` nella directory
+                            corrente e nelle sottocartelle.</td>
+                    </tr>
+                    <tr>
+                        <th>tar</th>
+                        <td>Comprimi/estrai</td>
+                        <td>Crea archivi compressi o estrae file da archivi. Usato comunemente con gzip (`.tar.gz`).
+                            Esempio: `tar -czf archivio.tar.gz cartella/` crea un archivio compresso; `tar -xzf
+                            archivio.tar.gz` lo estrae.</td>
+                    </tr>
+                    <tr>
+                        <th>df</th>
+                        <td>Spazio disco</td>
+                        <td>Mostra lo spazio disponibile e utilizzato su ciascun filesystem. L'opzione `-h` rende
+                            l'output leggibile (`df -h`) mostrando dimensioni in MB/GB. Utile per controllare se un
+                            disco è quasi pieno.</td>
+                    </tr>
+                    <tr>
+                        <th>du</th>
+                        <td>Dimensione file/cartelle</td>
+                        <td>Riporta l'utilizzo dello spazio su disco da parte di file e directory. `du -sh cartella/`
+                            restituisce la dimensione totale della cartella in formato leggibile. Molto utile per capire
+                            cosa occupa spazio.</td>
+                    </tr>
+                    <tr>
+                        <th>nano</th>
+                        <td>Editor di testo</td>
+                        <td>Editor di testo semplice da terminale, adatto a modifiche rapide. Offre comandi visuali per
+                            salvare, uscire, cercare, ecc. Ad esempio: `nano file.txt` apre il file per modificarlo.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>vim</th>
+                        <td>Editor avanzato</td>
+                        <td>Editor di testo molto potente ma con curva di apprendimento più ripida. Modalità diverse
+                            (comando, inserimento), estendibile con plugin, ideale per programmatori. Esempio: `vim
+                            script.sh` apre il file per editing.</td>
+                    </tr>
+                    <tr>
+                        <th>whoami</th>
+                        <td>Mostra utente attuale</td>
+                        <td>Restituisce il nome dell'utente attualmente connesso alla sessione terminale. Utile in
+                            script o su sistemi multiutente per confermare i privilegi in uso.</td>
+                    </tr>
+                    <tr>
+                        <th>uptime</th>
+                        <td>Tempo acceso</td>
+                        <td>Indica da quanto tempo è acceso il sistema, insieme al carico medio della CPU. Utile per
+                            monitorare la stabilità e il carico generale della macchina.</td>
+                    </tr>
+                    <tr>
+                        <th>history</th>
+                        <td>Comandi usati</td>
+                        <td>Mostra la cronologia dei comandi eseguiti nel terminale corrente. Ogni comando ha un numero
+                            associato, utile per richiamarlo rapidamente con `!numero`.</td>
+                    </tr>
+                    <tr>
+                        <th>clear</th>
+                        <td>Pulisce lo schermo</td>
+                        <td>Rimuove tutto il testo visualizzato nel terminale corrente, rendendolo vuoto e pronto per
+                            nuovi comandi. Non cancella la cronologia, solo l’aspetto visivo.</td>
+                    </tr>
+                    <tr>
+                        <th>alias</th>
+                        <td>Comandi personalizzati</td>
+                        <td>Permette di creare scorciatoie per comandi lunghi. Es. `alias ll="ls -la"` crea un nuovo
+                            comando `ll` per elencare file in modo dettagliato. Utile per semplificare operazioni
+                            ripetitive.</td>
+                    </tr>
+                    <tr>
+                        <th>ping</th>
+                        <td>Controlla connessione</td>
+                        <td>Invia pacchetti ICMP a un host per verificarne la raggiungibilità e misurare il tempo di
+                            risposta. Esempio: `ping google.com` mostra se il sito è raggiungibile e quanto tempo
+                            impiega a rispondere. Utile per diagnosticare problemi di rete.</td>
+                    </tr>
+                    <tr>
+                        <th>curl</th>
+                        <td>Scarica contenuti</td>
+                        <td>Strumento per trasferire dati da o verso un server usando protocolli come HTTP, FTP, ecc.
+                            Esempio: `curl https://example.com` scarica il contenuto della pagina. Può essere usato
+                            anche per inviare dati (API REST).</td>
+                    </tr>
+                    <tr>
+                        <th>wget</th>
+                        <td>Scarica file</td>
+                        <td>Utile per scaricare file da internet via riga di comando. Esempio: `wget
+                            https://example.com/file.zip` salva il file nella directory corrente. Può scaricare
+                            ricorsivamente interi siti web o directory.</td>
+                    </tr>
+                    <tr>
+                        <th>traceroute</th>
+                        <td>Traccia percorso</td>
+                        <td>Mostra il percorso (hop) seguito dai pacchetti per raggiungere un host remoto. Aiuta a
+                            individuare dove si verificano rallentamenti o problemi di connessione lungo la rete.</td>
+                    </tr>
+                    <tr>
+                        <th>netstat</th>
+                        <td>Info sulla rete</td>
+                        <td>Mostra connessioni di rete attive, porte in ascolto, tabelle di routing e altro. Utile per
+                            capire se un servizio è in ascolto su una porta o se ci sono connessioni sospette.</td>
+                    </tr>
+                    <tr>
+                        <th>ss</th>
+                        <td>Socket di rete</td>
+                        <td>Alternativa moderna e più veloce a `netstat`. Mostra socket attivi, connessioni TCP/UDP,
+                            porte in ascolto e statistiche dettagliate sul traffico di rete.</td>
+                    </tr>
+                    <tr>
+                        <th>apt</th>
+                        <td>Gestisce pacchetti</td>
+                        <td>Gestore di pacchetti per sistemi basati su Debian (es. Ubuntu). Usato per installare,
+                            aggiornare o rimuovere software. Es. `apt install nomepacchetto` installa un programma dal
+                            repository ufficiale.</td>
+                    </tr>
+                    <tr>
+                        <th>yum</th>
+                        <td>Pacchetti RedHat</td>
+                        <td>Gestore di pacchetti per sistemi basati su RedHat (es. CentOS). Permette di installare,
+                            aggiornare e rimuovere software. È stato sostituito da `dnf` nelle versioni più recenti.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>dnf</th>
+                        <td>Nuovo gestore pacchetti</td>
+                        <td>Successore di `yum` su Fedora, CentOS 8+ e RHEL 8+. Offre miglior gestione delle dipendenze
+                            e prestazioni migliori. Es. `dnf install nomepacchetto` installa un software dal repository.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>brew</th>
+                        <td>Pacchetti su macOS</td>
+                        <td>Gestore di pacchetti per macOS (e Linux). Usato per installare software open source. Es.
+                            `brew install nomepacchetto` scarica e installa in modo semplice senza modificare il sistema
+                            principale.</td>
+                    </tr>
+                    <tr>
+                        <th>git</th>
+                        <td>Versionamento codice</td>
+                        <td>Sistema di controllo di versione distribuito. Permette di salvare lo storico del codice,
+                            collaborare con altri sviluppatori e gestire rami di sviluppo. Esempio: `git clone`, `git
+                            commit`, `git push`, `git pull`.</td>
+                    </tr>
+                    <tr>
+                        <th>git clone</th>
+                        <td>Scarica repository</td>
+                        <td>Copia un repository remoto (es. GitHub) in locale. Esempio: `git clone
+                            https://github.com/utente/progetto.git`. Crea una copia completa del codice e della sua
+                            storia.</td>
+                    </tr>
+                    <tr>
+                        <th>git status</th>
+                        <td>Stato modifiche</td>
+                        <td>Mostra i file modificati, aggiunti o rimossi rispetto all’ultimo commit. Aiuta a capire cosa
+                            c’è da salvare, inviare o ignorare prima di un commit.</td>
+                    </tr>
+                    <tr>
+                        <th>git commit</th>
+                        <td>Salva modifiche</td>
+                        <td>Registra le modifiche al repository. Usato dopo `git add`, crea uno snapshot con un
+                            messaggio. Esempio: `git commit -m "Aggiunto file"`.</td>
+                    </tr>
+                    <tr>
+                        <th>git push</th>
+                        <td>Invia modifiche</td>
+                        <td>Invia i commit locali al repository remoto. Serve per condividere le modifiche con altri
+                            sviluppatori o per salvare il lavoro su server remoti come GitHub.</td>
+                    </tr>
+                    <tr>
+                        <th>git pull</th>
+                        <td>Scarica aggiornamenti</td>
+                        <td>Recupera e unisce gli aggiornamenti dal repository remoto nel ramo corrente. Mantiene
+                            sincronizzato il progetto con i contributi degli altri sviluppatori.</td>
+                    </tr>
+                    <tr>
+                        <th>uname</th>
+                        <td>Info sul sistema</td>
+                        <td>Mostra informazioni sul sistema operativo. L'opzione `-a` mostra dati completi: nome kernel,
+                            versione, architettura, ecc. Utile per script e debugging.</td>
+                    </tr>
+                    <tr>
+                        <th>lsblk</th>
+                        <td>Visualizza dischi</td>
+                        <td>Elenca i dispositivi a blocchi (dischi e partizioni). È molto utile per identificare dove
+                            sono montati i dischi, chi è `/dev/sda`, ecc. Non mostra file, ma hardware di
+                            memorizzazione.</td>
+                    </tr>
+                    <tr>
+                        <th>mount</th>
+                        <td>Monta dispositivi</td>
+                        <td>Associa un dispositivo (es. USB, partizione) a una directory nel filesystem. Esempio: `mount
+                            /dev/sdb1 /mnt/usb` collega il dispositivo alla cartella `/mnt/usb` per accedere ai file.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>umount</th>
+                        <td>Smonta dispositivi</td>
+                        <td>Rimuove l'associazione tra un dispositivo e il filesystem. Necessario prima di scollegare
+                            fisicamente un disco o chiavetta USB per evitare perdita di dati.</td>
+                    </tr>
+                    <tr>
+                        <th>shutdown</th>
+                        <td>Spegne il sistema</td>
+                        <td>Programma o esegue lo spegnimento del sistema. Esempio: `shutdown now` spegne subito;
+                            `shutdown -h +10` spegne dopo 10 minuti. Spesso usato su server o terminali remoti.</td>
+                    </tr>
+                    <tr>
+                        <th>reboot</th>
+                        <td>Riavvia il sistema</td>
+                        <td>Riavvia immediatamente il sistema. È equivalente a `shutdown -r now`. Utile per applicare
+                            aggiornamenti o ripristinare lo stato del sistema dopo modifiche importanti.</td>
+                    </tr>
 
-    <main>
+                </tbody>
+            </table>
+            <p><br><br>Ovviamente non si andranno a usare tutti quanti in un singolo contesto, questi comandi si imparano con la
+                pratica e il tempo nell'ambiente di linux.</p>
+        </article>
+        
     </main>
-
 
 </body>
 

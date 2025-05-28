@@ -2,18 +2,16 @@
 
 Screen {
     overflow-y: auto;
-}
-
-.input {
-    height: 3;
-    padding: 1;
-    background: gray;
-    border: round;
-}
-
-.output {
     background: black;
+}
+
+#input {
+    background: black;
+    margin-bottom: 1;
+}
+
+#output {
     color: white;
     overflow-y: auto;
-    border: round;
+    padding: 0 1;
 }

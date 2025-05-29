@@ -156,5 +156,3 @@ class KernelLabTUI(App):
         elif event.key == "up":    [scroll_view.scroll_up() for _ in range(4)]
         elif event.key == "right": [scroll_view.scroll_right() for _ in range(4)]
         elif event.key == "left":  [scroll_view.scroll_left() for _ in range(4)]
-
-KernelLabTUI().run()

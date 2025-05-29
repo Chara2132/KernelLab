@@ -15,34 +15,7 @@ KernelLab è pensato per ambienti **minimalisti**, come installazioni Arch senza
 - ⚡ Avere un'interfaccia testuale leggibile e migliorata con [textual](https://textual.textualize.io/)
 - 📚 Estendere facilmente le funzionalità con nuovi comandi modulari
 
----
 
-## 📂 Struttura del Progetto
-\`\`\`
-KernelLab/    
-├── main.py    
-├── core/    
-│ ├── log_parser.py    
-│ ├── module_inspector.py
-│ ├── crash_analyzer.py
-│ ├──  cmd.py
-│ ├── crash_formatter.py
-│ └── timeline_builder.py
-├──ui/
-│ ├──tui/
-│ |   ├── main_view.py
-| |   └── tui.tcss
-| └──web/
-│     ├── index.html
-│     ├── style.css
-│     └── script.js
-├──utils/
-│ └── helper.py
-├── README.md    
-├── requirements.txt    
-└── .venv/        
-\`\`\`
----
 
 ## ⚙️ Funzionalità
 

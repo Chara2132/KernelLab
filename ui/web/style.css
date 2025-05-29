@@ -3,7 +3,23 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+main article{
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: left;
+    margin-bottom: 40px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);   
+}
+main h1{
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color:#00bfa6;
+}
 button{
     text-align: center;
     font-size: 26px;

@@ -47,8 +47,8 @@ class KernelLabTUI(App):
         ]
     def compose(self) -> ComposeResult:
         yield Vertical(
-            VerticalScroll(Static("", id="output", markup=False, expand=True), id="scroll_output"),
             Input(id="input", placeholder="Scrivi il tuo comando"),
+            VerticalScroll(Static("", id="output", markup=False, expand=True), id="scroll_output"),
             id="menu"
         )
 

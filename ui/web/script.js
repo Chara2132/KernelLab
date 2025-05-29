@@ -1,7 +1,7 @@
 
 class Commands {
     constructor() {
-        this.commands = ["help", "ls", "cd", "pwd", "mkdir", "rm", "cp", "mv", "echo", "clear"];
+        this.commands = ["help", "ls", "cd", "pwd", "mkdir", "rm", "cp", "mv", "echo", "clear","touch"];
         this.fs = {
             "/": {
                 type: "dir",
@@ -87,57 +87,64 @@ class Commands {
         }
         return node;
     }
+    touch_command(name) {
+        const dir = this._resolvePath(this.currentPath);
+        if (!dir.contents[name]) {
+            dir.contents[name] = { type: "file", content: "" };
+            return "";
+        }
+        return `touch: cannot create file '${name}': File exists`;
+    }
 }
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.querySelector("#terminal-input");
+    const output = document.querySelector("#terminal-output");
 
-const input = document.getElementById("terminal-input");
-const output = document.getElementById("terminal-output");
-
-input.addEventListener("keydown", (event) => {
     const shell = new Commands();
 
-    if (event.key === "Enter") {
-        const command = input.value.trim().split(" ");
-        const args=command[1];
-        switch (command[0]) {
-            case "help":
-                output = shell.commands.help_command();
-                break;
-            case "ls":
-                output = shell.commands.ls_command();
-                break;
-            case "cd":
-                output = shell.commands.cd_command(args);
-                break;
-            case "pwd":
-                output = shell.commands.pwd_command();
-                break;
-            case "mkdir":
-                output = shell.commands.mkdir_command(args);
-                break;
-            case "rm":
-                output = shell.commands.rm_command(args);
-                break;
-            case "cp":
-                output = shell.commands.cp_command(args);
-                break;
-            case "mv":
-                output = shell.commands.mv_command(args);
-                break;
-            case "echo":
-                output = shell.commands.echo_command(args);
-                break;
-            case "clear":
-                output = shell.commands.clear_command();
-                break;
-            default:
-                output = `Comando non riconosciuto: ${command}`;
-                break;
+    input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            const command = input.value.trim().split(" ");
+            const args = command[1];
+            let result;
+
+            switch (command[0]) {
+                case "help":
+                    result = shell.help_command();
+                    break;
+                case "ls":
+                    result = shell.ls_command();
+                    break;
+                case "cd":
+                    result = shell.cd_command(args);
+                    break;
+                case "pwd":
+                    result = shell.pwd_command();
+                    break;
+                case "mkdir":
+                    result = shell.mkdir_command(args);
+                    break;
+                case "rm":
+                    result = shell.rm_command(args);
+                    break;
+                case "echo":
+                    result = shell.echo_command(args);
+                    break;
+                case "clear":
+                    output.innerHTML = ""; 
+                    input.value = "";
+                    return;
+                default:
+                    result = `Comando non riconosciuto: ${command[0]}`;
+                    break;
+            }
+
+            output.innerHTML += `\n$ ${input.value}\n${result}`;
+            input.value = "";
+            output.scrollTop = output.scrollHeight;
         }
-
-        if (command === "") return;
-
-        output.innerHTML += `\n$ ${command}\n`;
-        input.value = "";
-        output.scrollTop = output.scrollHeight;
-    }
+    });
 });
+
+
+

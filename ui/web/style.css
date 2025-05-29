@@ -34,7 +34,9 @@ button:hover{
     background-color: black;
     color: white;
 }
-
+#end{
+    text-align: center;
+}
 
 :root {
     --bg-color: #1e1e2f;
@@ -93,7 +95,14 @@ article ul {
     padding-left: 20px;
     margin-bottom: 15px;
 }
-
+#list{
+    display: flex;
+    justify-content: space-between;
+}
+#list img{
+    width: 40%;
+    margin-top: -1rem;
+}
 article ul li {
     margin-bottom: 5px;
     color: var(--subtle-text);
@@ -132,7 +141,10 @@ article.two-column {
     align-items: flex-start;
     flex-wrap: wrap;
 }
-
+img{
+    width: 30%;
+    margin-top: 4rem;
+}
 .text-content {
     flex: 1 1 60%;
 }

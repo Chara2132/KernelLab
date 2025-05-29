@@ -1,2 +1,4 @@
 pathlib
 textual==3.2.0
+subprocess
+webbrowser

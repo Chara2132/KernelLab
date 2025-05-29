@@ -8,6 +8,7 @@ from core.cmd import shell_command
 from core.log_parser import read_kernel_log
 from core.crash_analyzer import detect_crashes
 from core.timeline_builder import build_timeline, format_timeline
+import subprocess
 
 class KernelLabTUI(App):
     def __init__(self, **kwargs)->None:
@@ -63,8 +64,7 @@ class KernelLabTUI(App):
         if not command: return
 
         if command[0] == "help" or (len(command) > 1 and command[1] in ("-h", "--help")):
-            result = (
-                "Comandi disponibili:\n"
+            first = (
                 "  >show-kernel-log [-t | --total] / [-l | --length] N \n"
                 "  >show-crash-log [-t | --total] / [-l | --length] N\n"
                 "  >show-timeline [-t | --total] / [-l | --length] N\n"
@@ -73,6 +73,9 @@ class KernelLabTUI(App):
                 "  >version\n"
                 "  -exit"
             )
+            command = "ls /{,usr/}{bin,sbin} | sort | uniq"
+            output = subprocess.check_output(command, shell=True, text=True)
+            result=f"Comandi:\n {output} {first}"
         elif command[0] in self.UNSUPPORTED_COMMANDS :
             result = f"⚠️ I comandi con `{command[0]}` non sono supportati nella shell simulata."
         elif command[0] == "version":

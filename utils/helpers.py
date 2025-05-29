@@ -2,24 +2,27 @@
 
 import os
 import re
+import subprocess
 
-def read_log_file(path="/var/log/kern.log")->str:
-    """Legge il contenuto di un file di log del kernel"""
+def read_kernel_log_journalctl() -> list[str]:
+    """Legge i log del kernel usando journalctl (sistemi con systemd)"""
     try:
-        with open(path, "r") as f:
-            return f.readlines()
+        logs = subprocess.check_output(['journalctl', '-k', '--no-pager'], text=True)
+        return logs.splitlines()
     except FileNotFoundError:
-        return ["[Errore] File non trovato: " + path]
-    except PermissionError:
-        return ["[Errore] Permessi insufficienti per accedere a: " + path]
+        return ["[Errore] journalctl non trovato. systemd potrebbe non essere in uso."]
+    except subprocess.CalledProcessError as e:
+        return [f"[Errore] journalctl ha fallito: {e}"]
+    except Exception as e:
+        return [f"[Errore] {e}"]
 
-def filter_logs(log_lines, keyword=None)->str:
+def filter_logs(log_lines, keyword=None)->list[str]:
     """Filtra i log per una parola chiave"""
     if keyword:
         return [line for line in log_lines if keyword.lower() in line.lower()]
     return log_lines
 
-def extract_timestamps(log_lines)->str:
+def extract_timestamps(log_lines)->list[str]:
     """Estrae i timestamp dalle righe di log (formato tipico: 'Jan  1 12:00:00')"""
     timestamps = []
     for line in log_lines:
@@ -28,7 +31,7 @@ def extract_timestamps(log_lines)->str:
             timestamps.append(match.group())
     return timestamps
 
-def summarize_logs(log_lines)->dict:
+def summarize_logs(log_lines)->dict[str,int]:
     """Conta quanti errori/warning/info ci sono"""
     summary = {"error": 0, "warning": 0, "info": 0}
     for line in log_lines:

@@ -168,4 +168,36 @@ table tbody th,td{
     text-align: center;
     padding: 10px;
 }
+#terminal-container {
+  background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+  color: #00ffcc;
+  font-family: monospace;
+  padding: 1rem;
+  height: 400px;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+#terminal-output {
+  white-space: pre-wrap;
+}
+
+#terminal-input-line {
+  display: flex;
+  align-items: center;
+}
+
+.prompt {
+  margin-right: 5px;
+}
+
+#terminal-input {
+  background: transparent;
+  border: none;
+  color: #00ffcc;
+  flex: 1;
+  outline: none;
+  font-family: inherit;
+}
+
 
